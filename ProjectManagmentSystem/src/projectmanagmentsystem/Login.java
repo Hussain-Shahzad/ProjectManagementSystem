@@ -11,11 +11,17 @@ import javax.swing.*;
  */
 public class Login extends javax.swing.JFrame {
 
+    public int loginType=1;
+    private String email="admin@gmail.com";
+    private String password="admin123";
+    public boolean loginflag=false;
+    
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        
     }
 
     /**
@@ -42,6 +48,18 @@ public class Login extends javax.swing.JFrame {
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
             }
         });
 
@@ -113,12 +131,68 @@ public class Login extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        //String temp=jComboBox1.getSelectedItem();
+        String temp=jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        if(temp.equals("Admin")){
+            loginType=1;
+        }else if(temp.equals("Advisor")){
+            loginType=2;
+        }else if(temp.equals("Student")){
+            loginType=3;
+        }
+            
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(null,"Invalid ceredentials.","Alert",JOptionPane.ERROR_MESSAGE); 
+         switch(loginType){
+             case 1:
+                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 {
+                     loginflag=true;
+                     AdminM adminmenu=new AdminM();
+                     setVisible(false);
+                     adminmenu.setVisible(true);
+                     
+                 } else{
+                     JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                 }
+                 break;
+             case 2:
+                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 {
+                     loginflag=true;
+                     AdvisorM advisormenu=new AdvisorM();
+                     setVisible(false);
+                     advisormenu.setVisible(true);
+                     
+                 } else{
+                     JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                 }
+                 break;
+             case 3:
+                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 {
+                     loginflag=true;
+                     StudentM studentmenu=new StudentM();
+                     setVisible(false);
+                     studentmenu.setVisible(true);
+                     
+                 } else{
+                     JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                 }
+                 break;
+                 
+         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -14,10 +14,18 @@ public class Driver {
     /**
      * @param args the command line arguments
      */
+    public static void LOGIN(){
+        Login loginpage=new Login();
+        loginpage.setVisible(true);
+        
+    }
+    
     public static void main(String[] args) {
         
-        Login loginpage=new Login();
-        loginpage.show();
+        
+        //loginpage.show();
+        LOGIN();
+        
         
     }
     
