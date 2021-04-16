@@ -103,6 +103,10 @@ public class StudentData {
         }else{
             flag=false;
         }
+        if(flag==true)
+        {
+            c=cnic;
+        }
         return flag;
         
     }

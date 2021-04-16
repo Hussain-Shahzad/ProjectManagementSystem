@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package projectmanagmentsystem;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.*;
 import javax.swing.JOptionPane;
 /**
@@ -12,6 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class Addproject extends javax.swing.JFrame {
     
+    private String selected;
+    public int action=1;
     private static List<ProjectData> PROJECTS=new ArrayList<ProjectData>();
     
     public List<ProjectData> getPrjList()
@@ -23,6 +29,17 @@ public class Addproject extends javax.swing.JFrame {
     {
         PROJECTS.add(p);
         return true;
+    }
+    
+    public void editPrj(ProjectData p,int index)
+    {
+        try
+        {
+            
+            PROJECTS.set(index, p);
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong");
+        }    
     }
     
     public boolean getproject(ProjectData p)
@@ -46,12 +63,90 @@ public class Addproject extends javax.swing.JFrame {
         return flag;
         
     }
+    
+    public void saveData(String filename){
+        
+        try {
+            FileWriter fw = new FileWriter(filename);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            //bw.write("Name,Designation,Department,CNIC,Email,Password");
+            
+            for(int i = 0 ; i < PROJECTS.size();i++)
+            {
+                
+                bw.write(PROJECTS.get(i).getTitle() + ","+
+                        PROJECTS.get(i).getAdv() + ","+
+                        PROJECTS.get(i).getId()+","+
+                        PROJECTS.get(i).getType()+","+
+                        PROJECTS.get(i).getDisc()+"\n"
+                );
+            }
+            
+            bw.flush();
+            bw.close();
+            fw.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Unable to save data");
+        }
+    
+    
+    }
+    
+    public void loadData(String filename){
+        //System.out.println('q');
+        
+        try {
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            
+          String line=br.readLine() ;
+          //System.out.print(line);
+          do
+          {
+              
+              ProjectData a = new ProjectData();
+               String[] temp = line.split(",");
+               
+               a.setTitle(temp[0]);
+               a.setAdv(temp[1]);
+               a.setId(temp[2]);
+               a.setType(temp[3]);
+               a.setDisc(temp [4]);
+                 
+               ADD(a);
+               line=br.readLine();
+               
+          }while(line!=null);
+             
+            br.close();
+            fr.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "unable to load file");
+        }
+    
+    
+    }
 
     /**
      * Creates new form Addproject
      */
     public Addproject() {
         initComponents();
+    }
+    
+    public Addproject(String selected){
+        initComponents();
+        this.selected=selected;
+        action=2;
+        Projects pr=new Projects();
+        ProjectData p=pr.getSearched(selected);
+        jTextField1.setText(p.getTitle());
+        jTextField2.setText(p.getAdv());
+        jTextField3.setText(p.getTitle());
+        jTextArea1.setText(p.getDisc());
+        
+        
     }
 
     /**
@@ -84,7 +179,7 @@ public class Addproject extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Research", "Hybrid", "entreperneurship" }));
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -189,14 +284,31 @@ public class Addproject extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ProjectData p=new ProjectData();
-        boolean flag=getproject(p);
-        if(flag==true)
+        if(action==1)
         {
-            ADD(p);
-            System.out.println("Added");
-        }else{
-            JOptionPane.showMessageDialog(null, "Invalid input");
+            ProjectData p=new ProjectData();
+            boolean flag=getproject(p);
+            if(flag==true)
+            {
+                ADD(p);
+                System.out.println("Added");
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+        } else if(action==2){
+
+            Projects P=new Projects();
+            int index=P.searchPrj(selected);
+            ProjectData prj=new ProjectData();
+            boolean flag=getproject(prj);
+            if(flag==true)
+            {
+                editPrj(prj,index);
+                System.out.println("Edited");
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+        
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

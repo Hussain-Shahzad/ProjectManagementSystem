@@ -6,13 +6,20 @@
 package projectmanagmentsystem;
 import java.util.*;
 import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 /**
  *
  * @author hussa
  */
 public class Addadvisor extends javax.swing.JFrame {
     
+    private String selected;
+    
     private static List<AdvisorData> ADVISORS= new ArrayList<AdvisorData>();
+    public int action=1;
 
     public List<AdvisorData> getAdvList()
     {
@@ -23,6 +30,17 @@ public class Addadvisor extends javax.swing.JFrame {
     {
         ADVISORS.add(a);
         return true;
+    }
+    
+    public void editAdv(AdvisorData a,int index)
+    {
+        try
+        {
+            
+            ADVISORS.set(index, a);
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong");
+        }    
     }
     
     public boolean getadvisor(AdvisorData a)
@@ -41,14 +59,99 @@ public class Addadvisor extends javax.swing.JFrame {
         return flag;
             
     }
+    
+    public void saveData(String filename){
+        
+        try {
+            FileWriter fw = new FileWriter(filename);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            //bw.write("Name,Designation,Department,CNIC,Email,Password");
+            
+            for(int i = 0 ; i < ADVISORS.size();i++)
+            {
+                
+                bw.write(ADVISORS.get(i).getName() + ","+
+                        ADVISORS.get(i).getDesignation() + ","+
+                        ADVISORS.get(i).getDepartment()+","+
+                        ADVISORS.get(i).getCnic()+","+
+                        ADVISORS.get(i).getEmail()+","+
+                        ADVISORS.get(i).getPassword()+"\n"
+                );
+            }
+            
+            bw.flush();
+            bw.close();
+            fw.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Unable to save data");
+        }
+    
+    
+    }
+    
+    public void loadData(String filename){
+        //System.out.println('q');
+        
+        try {
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            
+          String line=br.readLine() ;
+          //System.out.print(line);
+          do
+          {
+              
+              AdvisorData a = new AdvisorData();
+               String[] temp = line.split(",");
+               
+               a.setName(temp[0]);
+               a.setDesignation(temp[1]);
+               a.setDepartment(temp[2]);
+               a.setCnic(temp[3]);
+               a.setEmail(temp [4]);
+               a.setPassword(temp[5]);
+                 
+               ADD(a);
+               line=br.readLine();
+               
+          }while(line!=null);
+             
+            br.close();
+            fr.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "unable to load file");
+        }
+    
+    
+    }
 
             
     /**
      * Creates new form Addadvisor
+     * @param selected
      */
     public Addadvisor() {
         initComponents();
+        
     }
+    public Addadvisor(String selected) {
+        initComponents();
+        this.selected=selected;
+        action=2;
+        advisors Ad=new advisors();
+        int index=Ad.searchAdv(selected);
+        AdvisorData A=Ad.getSearched(selected);
+        jTextField1.setText(A.getName());
+        jTextField2.setText(A.getCnic());
+        jTextField3.setText(A.getEmail());
+        jTextField4.setText(A.getPassword());
+        
+        
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,14 +292,35 @@ public class Addadvisor extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        AdvisorData a=new AdvisorData();
-        boolean flag=getadvisor(a);
-        if(flag==true)
+        if(action==1)
         {
-            ADD(a);
-            System.out.println("Added");
-        }else{
-            JOptionPane.showMessageDialog(null, "Invalid input");
+            AdvisorData a=new AdvisorData();
+            boolean flag=getadvisor(a);
+            if(flag==true)
+            {
+                ADD(a);
+                System.out.println("Added");
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+        
+        }else if(action==2)
+        {
+            advisors p=new advisors();
+            int index=p.searchAdv(selected);
+            AdvisorData a=new AdvisorData();
+            boolean flag=getadvisor(a);
+            if(flag==true)
+            {
+                editAdv(a,index);
+                System.out.println("Edited");
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+            
+            
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

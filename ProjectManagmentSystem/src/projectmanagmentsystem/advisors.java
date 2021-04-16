@@ -45,6 +45,24 @@ public class advisors extends javax.swing.JFrame {
         
         return index;
     }
+    public AdvisorData getSearched(String n)
+    {
+        int index=searchAdv(n);
+        return adv.getAdvList().get(index);
+    
+    }
+    public void searchedList(int index)
+    {
+        clearList();
+        dm.addElement(adv.getAdvList().get(index).getName());
+    
+    }
+    public void deleteAdv(int index)
+    {
+        adv.getAdvList().remove(index);
+    }
+    
+    
     
     /**
      * Creates new form advisors
@@ -84,6 +102,11 @@ public class advisors extends javax.swing.JFrame {
         });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Edit");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +187,29 @@ public class advisors extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        /*int temp=searchAdv(jList1.getSelectedValue());
+        if (temp==-1)
+        {
+            JOptionPane.showMessageDialog(null,"Search Result not found");
+        }else{
+            AdvisorData ad=getSearched(jList1.getSelectedValue());
+            adv.action=2;
+            adv.setVisible(true);
+            adv.editAdv(ad, temp);
+            clearList();
+            loadList();
+            adv.action=1;
+            
+        }*/
+        String n=jList1.getSelectedValue();
+        
+        Addadvisor ad=new Addadvisor(n);
+      
+        ad.setVisible(true);
+        setVisible(false);
+        clearList();
+        loadList();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -173,8 +219,33 @@ public class advisors extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        int temp=searchAdv(jTextField1.getText());
+        if (temp==-1)
+        {
+            JOptionPane.showMessageDialog(null,"Search Result not found");
+        }
+        else{
+            searchedList(temp);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            int temp=searchAdv(jList1.getSelectedValue());
+            if (temp==-1)
+            {
+                JOptionPane.showMessageDialog(null,"Search Result not found");
+            }else{
+                deleteAdv(temp);
+                clearList();
+                loadList();
+            
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null,"Please select from list");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

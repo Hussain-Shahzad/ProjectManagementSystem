@@ -24,6 +24,15 @@ public class Driver {
         
         
         //loginpage.show();
+        Addadvisor ad=new Addadvisor();
+        Addproject ap=new Addproject();
+        Addstudent as=new Addstudent();
+        
+        
+        ap.loadData("PROJECTS.txt");
+        ad.loadData("ADVISORS.txt");
+        as.loadData("STUDENTS.txt");
+       
         LOGIN();
         
         

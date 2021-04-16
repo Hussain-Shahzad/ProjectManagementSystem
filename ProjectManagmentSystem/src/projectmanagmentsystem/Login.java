@@ -22,6 +22,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         
+       // Addadvisor ad=new Addadvisor();
+       //ad.loadData("ADVISORS.txt");
+        
     }
 
     /**
@@ -41,6 +44,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,6 +83,13 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setText("Welcome Login to continue");
 
+        jButton2.setText("Exit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,7 +112,10 @@ public class Login extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jComboBox1, 0, 120, Short.MAX_VALUE)
                                     .addComponent(jTextField1)
-                                    .addComponent(jTextField2))))))
+                                    .addComponent(jTextField2)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2)))
                 .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,7 +137,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -145,7 +161,7 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          switch(loginType){
              case 1:
-                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 if (jTextField1.getText().equals(email) && jTextField2.getText().equals(password))
                  {
                      loginflag=true;
                      AdminM adminmenu=new AdminM();
@@ -157,28 +173,42 @@ public class Login extends javax.swing.JFrame {
                  }
                  break;
              case 2:
-                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 Addadvisor adv=new Addadvisor();
+                 for (int i=0;i<adv.getAdvList().size();i++)
                  {
-                     loginflag=true;
-                     AdvisorM advisormenu=new AdvisorM();
-                     setVisible(false);
-                     advisormenu.setVisible(true);
+                    if (jTextField1.getText().equals(adv.getAdvList().get(i).getEmail()) && jTextField2.getText().equals(adv.getAdvList().get(i).getPassword()))
+                    {
+                         loginflag=true;
                      
-                 } else{
-                     JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                    }
                  }
+                    if(loginflag==true)
+                    {
+                        AdvisorM advisormenu=new AdvisorM();
+                        setVisible(false);
+                        advisormenu.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                    }
                  break;
              case 3:
-                 if (jTextField1.getText().equals(email) || jTextField2.getText().equals(password))
+                 Addstudent std=new Addstudent();
+                 for (int i=0;i<std.getStdList().size();i++)
                  {
-                     loginflag=true;
-                     StudentM studentmenu=new StudentM();
-                     setVisible(false);
-                     studentmenu.setVisible(true);
+                    if (jTextField1.getText().equals(std.getStdList().get(i).getEmail()) && jTextField2.getText().equals(std.getStdList().get(i).getPassword()))
+                    {
+                         loginflag=true;
                      
-                 } else{
-                     JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                    }
                  }
+                    if(loginflag==true)
+                    {
+                        StudentM studentmenu=new StudentM();
+                        setVisible(false);
+                        studentmenu.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Invalid ceredentials");
+                    }
                  break;
                  
          }
@@ -193,6 +223,19 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Addadvisor ad=new Addadvisor();
+        Addstudent as=new Addstudent();
+        Addproject ap=new Addproject();
+        
+        ap.saveData("PROJECTS.txt");
+        as.saveData("STUDENTS.txt");
+        ad.saveData("ADVISORS.txt");
+        System.exit(0);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +274,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

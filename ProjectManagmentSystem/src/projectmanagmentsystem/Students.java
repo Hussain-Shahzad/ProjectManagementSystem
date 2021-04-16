@@ -6,6 +6,7 @@
 package projectmanagmentsystem;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +30,37 @@ public class Students extends javax.swing.JFrame {
     {
         dm.clear();
         jList1.setModel(dm);
+    }
+    
+    public int searchStd(String n)
+    {
+        int index=-1;
+        for(int i=0;i<std.getStdList().size();i++)
+        {
+            if(std.getStdList().get(i).getName().equals(n))
+            {
+                index=i;
+            }
+        }
+        
+        return index;
+    }
+    
+    public StudentData getSearched(String n)
+    {
+        int index=searchStd(n);
+        return std.getStdList().get(index);
+    
+    }
+    public void searchedList(int index)
+    {
+        clearList();
+        dm.addElement(std.getStdList().get(index).getName());
+    
+    }
+    public void deleteStd(int index)
+    {
+        std.getStdList().remove(index);
     }
 
     /**
@@ -62,10 +94,25 @@ public class Students extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Edit");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Students");
 
@@ -142,6 +189,48 @@ public class Students extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int temp=searchStd(jTextField1.getText());
+        if (temp==-1)
+        {
+            JOptionPane.showMessageDialog(null,"Search Result not found");
+        }
+        else{
+            searchedList(temp);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            int temp=searchStd(jList1.getSelectedValue());
+            if (temp==-1)
+            {
+                JOptionPane.showMessageDialog(null,"Search Result not found");
+            }else{
+                deleteStd(temp);
+                clearList();
+                loadList();
+            
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null,"Please select from list");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String n=jList1.getSelectedValue();
+        
+        Addstudent sd=new Addstudent(n);
+      
+        sd.setVisible(true);
+        setVisible(false);
+        clearList();
+        loadList();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

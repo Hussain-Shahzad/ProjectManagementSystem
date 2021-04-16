@@ -6,6 +6,7 @@
 package projectmanagmentsystem;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,39 @@ public class Projects extends javax.swing.JFrame {
         dm.clear();
         jList1.setModel(dm);
     }
+    
+    public int searchPrj(String n)
+    {
+        int index=-1;
+        for(int i=0;i<prj.getPrjList().size();i++)
+        {
+            if(prj.getPrjList().get(i).getTitle().equals(n))
+            {
+                index=i;
+            }
+        }
+        
+        return index;
+    }
+    
+    public ProjectData getSearched(String n)
+    {
+        int index=searchPrj(n);
+        return prj.getPrjList().get(index);
+    
+    }
 
+    public void searchedList(int index)
+    {
+        clearList();
+        dm.addElement(prj.getPrjList().get(index).getTitle());
+    
+    }
+    public void deletePrj(int index)
+    {
+        prj.getPrjList().remove(index);
+    }
+    
     /**
      * Creates new form Projects
      */
@@ -62,8 +95,18 @@ public class Projects extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Edit");
 
@@ -85,16 +128,13 @@ public class Projects extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jButton3)
@@ -149,6 +189,37 @@ public class Projects extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int temp=searchPrj(jTextField1.getText());
+        if (temp==-1)
+        {
+            JOptionPane.showMessageDialog(null,"Search Result not found");
+        }
+        else{
+            searchedList(temp);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            int temp=searchPrj(jList1.getSelectedValue());
+            if (temp==-1)
+            {
+                JOptionPane.showMessageDialog(null,"Search Result not found");
+            }else{
+                deletePrj(temp);
+                clearList();
+                loadList();
+            
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null,"Please select from List");
+        
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

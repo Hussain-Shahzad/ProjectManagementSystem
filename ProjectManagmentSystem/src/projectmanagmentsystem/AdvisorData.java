@@ -62,6 +62,10 @@ public class AdvisorData {
         }else{
             flag=false;
         }
+        if(flag==true)
+        {
+            cnic=c;
+        }
         return flag;
         
     }
@@ -87,7 +91,7 @@ public class AdvisorData {
     }
 
     public boolean setEmail(String e) {
-        e = email;
+        email=e;
         return true;
     }
 
@@ -96,7 +100,7 @@ public class AdvisorData {
     }
 
     public boolean setPassword(String p) {
-        p = password;
+        password=p;
         return true;
     }
 

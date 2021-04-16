@@ -6,6 +6,10 @@
 
 package projectmanagmentsystem;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,6 +19,9 @@ import javax.swing.JOptionPane;
  * @author hussa
  */
 public class Addstudent extends javax.swing.JFrame {
+    
+    private String selected;
+    public int action=1;
     
     private static List<StudentData> STUDENTS= new ArrayList<StudentData>();
 
@@ -27,6 +34,17 @@ public class Addstudent extends javax.swing.JFrame {
     {
         STUDENTS.add(s);
         return true;
+    }
+    
+    public void editStd(StudentData a,int index)
+    {
+        try
+        {
+            
+            STUDENTS.set(index, a);
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Something went wrong");
+        }    
     }
     
     public boolean getstudent(StudentData s)
@@ -44,10 +62,90 @@ public class Addstudent extends javax.swing.JFrame {
         }
         return flag;
     }
+    
+    public void saveData(String filename){
+        
+        try {
+            FileWriter fw = new FileWriter(filename);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            //bw.write("Name,Designation,Department,CNIC,Email,Password");
+            
+            for(int i = 0 ; i < STUDENTS.size();i++)
+            {
+                
+                bw.write(STUDENTS.get(i).getName() + ","+
+                        STUDENTS.get(i).getRegno() + ","+
+                        STUDENTS.get(i).getCnic()+","+
+                        STUDENTS.get(i).getEmail()+","+
+                        STUDENTS.get(i).getPassword()+","+
+                        STUDENTS.get(i).getAddress()+"\n"
+                );
+            }
+            
+            bw.flush();
+            bw.close();
+            fw.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Unable to save data");
+        }
+    
+    
+    }
+    
+    public void loadData(String filename){
+        //System.out.println('q');
+        
+        try {
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            
+          String line=br.readLine() ;
+          //System.out.print(line);
+          do
+          {
+              
+              StudentData a = new StudentData();
+               String[] temp = line.split(",");
+               
+               a.setName(temp[0]);
+               a.setRegno(temp[1]);
+               a.setCnic(temp[2]);
+               a.setEmail(temp[3]);
+               a.setPassword(temp [4]);
+               a.setAddress(temp[5]);
+                 
+               ADD(a);
+               line=br.readLine();
+               
+          }while(line!=null);
+             
+            br.close();
+            fr.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "unable to load file");
+        }
+    
+    
+    }
 
     /** Creates new form Addstudent */
     public Addstudent() {
         initComponents();
+    }
+    
+    public Addstudent(String selected) {
+        initComponents();
+        this.selected=selected;
+        action=2;
+        Students s=new Students();
+        StudentData St=s.getSearched(selected);
+        jTextField1.setText(St.getName());
+        jTextField2.setText(St.getRegno());
+        jTextField3.setText(St.getCnic());
+        jTextField4.setText(St.getEmail());
+        jTextField5.setText(St.getPassword());
+        jTextArea1.setText(St.getAddress());
     }
 
     /** This method is called from within the constructor to
@@ -205,14 +303,30 @@ public class Addstudent extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        StudentData s=new StudentData();
-        boolean flag=getstudent(s);
-        if(flag==true)
-        {
-            ADD(s);
-            System.out.println("Added");
-        }else{
-            JOptionPane.showMessageDialog(null, "Invalid input");
+        if(action==1){
+            StudentData s=new StudentData();
+            boolean flag=getstudent(s);
+            if(flag==true)
+            {
+                ADD(s);
+                System.out.println("Added");
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+        }else if (action==2){
+        
+            Students p=new Students();
+            int index=p.searchStd(selected);
+            StudentData a=new StudentData();
+            boolean flag=getstudent(a);
+            if(flag==true)
+            {
+                editStd(a,index);
+                System.out.println("Edited");
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid input");
+            }
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
