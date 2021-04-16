@@ -5,11 +5,31 @@
  */
 package projectmanagmentsystem;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author hussa
  */
 public class Projects extends javax.swing.JFrame {
+    
+    private static Addproject prj=new Addproject();
+    private static DefaultListModel dm = new DefaultListModel();
+    
+    public void loadList()
+    {
+        jList1.setModel(dm);
+        int size=prj.getPrjList().size();
+        for (int i=0;i<size;i++)
+        {
+            dm.addElement(prj.getPrjList().get(i).getTitle());
+        }
+    }
+    public void clearList()
+    {
+        dm.clear();
+        jList1.setModel(dm);
+    }
 
     /**
      * Creates new form Projects
@@ -39,11 +59,6 @@ public class Projects extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Search");
@@ -85,13 +100,17 @@ public class Projects extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(jButton2)
-                        .addGap(72, 72, 72)))
+                        .addGap(56, 56, 56)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel2)
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -118,7 +137,7 @@ public class Projects extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );

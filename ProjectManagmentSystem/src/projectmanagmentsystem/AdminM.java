@@ -172,6 +172,8 @@ public class AdminM extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         Students stds=new Students();
+        stds.clearList();
+        stds.loadList();
         stds.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -190,6 +192,8 @@ public class AdminM extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         advisors adv=new advisors();
+        adv.clearList();
+        adv.loadList();
         adv.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -202,6 +206,8 @@ public class AdminM extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
         Projects prj=new Projects();
+        prj.clearList();
+        prj.loadList();
         prj.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

@@ -4,12 +4,48 @@
  * and open the template in the editor.
  */
 package projectmanagmentsystem;
-
+import java.util.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author hussa
  */
 public class Addproject extends javax.swing.JFrame {
+    
+    private static List<ProjectData> PROJECTS=new ArrayList<ProjectData>();
+    
+    public List<ProjectData> getPrjList()
+    {
+        return this.PROJECTS;
+    }
+    
+    public boolean ADD(ProjectData p)
+    {
+        PROJECTS.add(p);
+        return true;
+    }
+    
+    public boolean getproject(ProjectData p)
+    {
+        boolean flag=true;
+        p.setTitle(jTextField1.getText());
+        p.setAdv(jTextField2.getText());
+        p.setId(jTextField3.getText());
+        p.setType(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        p.setDisc(jTextArea1.getText());
+        if(!(p.setTitle(jTextField1.getText())==true && p.setId(jTextField3.getText())==true))
+        {
+            flag=false;
+        }
+        if(p.setAdv(jTextField2.getText())!=true)
+        {
+            flag=false;
+            JOptionPane.showMessageDialog(null, "Advisor not found!");
+        }
+        
+        return flag;
+        
+    }
 
     /**
      * Creates new form Addproject
@@ -51,6 +87,11 @@ public class Addproject extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Go Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -145,6 +186,19 @@ public class Addproject extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ProjectData p=new ProjectData();
+        boolean flag=getproject(p);
+        if(flag==true)
+        {
+            ADD(p);
+            System.out.println("Added");
+        }else{
+            JOptionPane.showMessageDialog(null, "Invalid input");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

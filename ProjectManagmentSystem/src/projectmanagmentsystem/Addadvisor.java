@@ -4,13 +4,45 @@
  * and open the template in the editor.
  */
 package projectmanagmentsystem;
-
+import java.util.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author hussa
  */
 public class Addadvisor extends javax.swing.JFrame {
+    
+    private static List<AdvisorData> ADVISORS= new ArrayList<AdvisorData>();
 
+    public List<AdvisorData> getAdvList()
+    {
+        return this.ADVISORS;
+    }
+    
+    public boolean ADD(AdvisorData a)
+    {
+        ADVISORS.add(a);
+        return true;
+    }
+    
+    public boolean getadvisor(AdvisorData a)
+    {
+        boolean flag=false;
+        a.setName(jTextField1.getText());
+        a.setCnic(jTextField2.getText());
+        a.setEmail(jTextField3.getText());
+        a.setPassword(jTextField4.getText());
+        a.setDepartment(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        a.setDesignation(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        if(a.setName(jTextField1.getText())==true && a.setCnic(jTextField2.getText())==true && a.setEmail(jTextField3.getText())==true)
+        {
+            flag=true;
+        }
+        return flag;
+            
+    }
+
+            
     /**
      * Creates new form Addadvisor
      */
@@ -45,7 +77,7 @@ public class Addadvisor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science", "Computer Engineering", "Electrical Engineering", "Civil Engineering" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Science", "Computer Engineering", "Electrical Engineering", "Civil Engineering", "Mechatronics Engineering", "Mechanical Engineering", "Chemical Engineering" }));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lecturer", "Associate Professor", "Professor" }));
 
@@ -62,6 +94,11 @@ public class Addadvisor extends javax.swing.JFrame {
         jLabel6.setText("Designation");
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Go Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -149,6 +186,19 @@ public class Addadvisor extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        AdvisorData a=new AdvisorData();
+        boolean flag=getadvisor(a);
+        if(flag==true)
+        {
+            ADD(a);
+            System.out.println("Added");
+        }else{
+            JOptionPane.showMessageDialog(null, "Invalid input");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

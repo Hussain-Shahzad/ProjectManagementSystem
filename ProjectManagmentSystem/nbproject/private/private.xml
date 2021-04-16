@@ -5,11 +5,14 @@
         <group>
             <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/AdminM.java</file>
             <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Students.java</file>
-            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Groups.java</file>
             <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Login.java</file>
             <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Driver.java</file>
-            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Projects.java</file>
+            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/AdvisorData.java</file>
+            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/StudentData.java</file>
             <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/advisors.java</file>
+            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Addstudent.java</file>
+            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/ProjectData.java</file>
+            <file>file:/F:/PMS/ProjectManagmentSystem/src/projectmanagmentsystem/Addadvisor.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,11 +5,31 @@
  */
 package projectmanagmentsystem;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author hussa
  */
 public class Students extends javax.swing.JFrame {
+    
+    private static Addstudent std=new Addstudent();
+    private static DefaultListModel dm = new DefaultListModel();
+    
+    public void loadList()
+    {
+        jList1.setModel(dm);
+        int size=std.getStdList().size();
+        for (int i=0;i<size;i++)
+        {
+            dm.addElement(std.getStdList().get(i).getName());
+        }
+    }
+    public void clearList()
+    {
+        dm.clear();
+        jList1.setModel(dm);
+    }
 
     /**
      * Creates new form Students
@@ -39,11 +59,6 @@ public class Students extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Search");

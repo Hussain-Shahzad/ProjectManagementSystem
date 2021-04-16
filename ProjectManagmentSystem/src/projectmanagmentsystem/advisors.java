@@ -5,12 +5,47 @@
  */
 package projectmanagmentsystem;
 
+import java.util.List;
+import javax.swing.*;
+
 /**
  *
  * @author hussa
  */
 public class advisors extends javax.swing.JFrame {
 
+    private static Addadvisor adv=new Addadvisor();
+    private static DefaultListModel dm = new DefaultListModel();
+    
+    public void loadList()
+    {
+        jList1.setModel(dm);
+        int size=adv.getAdvList().size();
+        for (int i=0;i<size;i++)
+        {
+            dm.addElement(adv.getAdvList().get(i).getName());
+        }
+    }
+    public void clearList()
+    {
+        dm.clear();
+        jList1.setModel(dm);
+    }
+    
+    public int searchAdv(String n)
+    {
+        int index=-1;
+        for(int i=0;i<adv.getAdvList().size();i++)
+        {
+            if(adv.getAdvList().get(i).getName().equals(n))
+            {
+                index=i;
+            }
+        }
+        
+        return index;
+    }
+    
     /**
      * Creates new form advisors
      */
@@ -39,16 +74,14 @@ public class advisors extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
-        jTextField1.setText("jTextField1");
-
         jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
 
@@ -63,7 +96,7 @@ public class advisors extends javax.swing.JFrame {
 
         jLabel2.setText("Search");
 
-        jButton4.setText("jButton4");
+        jButton4.setLabel("Go back");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -138,6 +171,11 @@ public class advisors extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -164,11 +202,13 @@ public class advisors extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(advisors.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new advisors().setVisible(true);
+                
+                
             }
         });
     }
