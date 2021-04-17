@@ -5,17 +5,65 @@
  */
 package projectmanagmentsystem;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author hussa
  */
 public class StudentM extends javax.swing.JFrame {
+    
+    AdvisorM am=new AdvisorM();
+    
+    private static GroupData grp =new GroupData();
+    
+    private int index;
+    
+    private static DefaultListModel dm = new DefaultListModel();
+    
+    public void loadList()
+    {
+        jList1.setModel(dm);
+        int size=grp.getStds().size();
+        for (int i=0;i<size;i++)
+        {
+            dm.addElement(grp.getStds().get(i).getName());
+        }
+    }
+    public void clearList()
+    {
+        dm.clear();
+        jList1.setModel(dm);
+    }
 
     /**
      * Creates new form StudentM
      */
     public StudentM() {
+        
         initComponents();
+    }
+    
+    public StudentM(int index) {
+        
+        initComponents();
+        Addstudent as=new Addstudent();
+        this.index=index;
+        if(am.getGrpList().size()!=0)
+        {    
+            grp=am.getGrpList().get(0);
+            jLabel4.setText(grp.getPrj().getTitle());
+        }else{
+            grp.ADD(as.getStdList().get(index));
+        }    
+            
+        grp.setId(as.getStdList().get(index).getGrpid());
+        
+       
+        clearList();
+        loadList();
+        
     }
 
     /**
@@ -38,6 +86,7 @@ public class StudentM extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,9 +96,14 @@ public class StudentM extends javax.swing.JFrame {
 
         jLabel2.setText("Student Menu");
 
-        jLabel3.setText("Assigned Project");
+        jLabel3.setText("Assigned Project:");
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Log out");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +119,7 @@ public class StudentM extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Details of Group");
+        jButton4.setText("Details of Project");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -73,23 +127,41 @@ public class StudentM extends javax.swing.JFrame {
         });
 
         jButton5.setText("Assignments");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Result");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("null");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +191,9 @@ public class StudentM extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -138,17 +212,64 @@ public class StudentM extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String temp=JOptionPane.showInputDialog(null,"Following Projects are available for selection.\n1.Autonomus Vehicles\n\nEnter title of selected project:");
+        Addproject pr=new Addproject();
+        for(int i=0;i<pr.getPrjList().size();i++)
+        {
+            if(temp.equals(pr.getPrjList().get(i).getTitle()))
+            {
+                grp.setPrj(temp);
+                jLabel4.setText(temp);
+                break;
+            }
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        try{
+            JOptionPane.showMessageDialog(null,"Title: "+grp.getPrj().getTitle()+"\nAdvisor: "+grp.getPrj().getAdv().getName()+"\nProject Id: "+grp.getPrj().getId()+"\nType: "+grp.getPrj().getType()+"\nDiscription: "+grp.getPrj().getDisc());
+        
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "No project selected");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        am.ADD(grp);
         setVisible(false);
         Driver.LOGIN();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String temp=JOptionPane.showInputDialog(null, "Enter Registration number of Student to add");
+        Addstudent s=new Addstudent();
+        
+        for (int i=0;i<s.getStdList().size();i++)
+        {
+            if(temp.equals(s.getStdList().get(i).getRegno()))
+            {
+                grp.ADD(s.getStdList().get(i));
+                s.getStdList().get(i).setGrpid(grp.getId());
+                clearList();
+                loadList();
+                break;
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Assignments:\n"+grp.getAssignment());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Results:\n"+grp.getMarks());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,6 +316,7 @@ public class StudentM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

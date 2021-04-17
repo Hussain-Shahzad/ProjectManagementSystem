@@ -105,7 +105,7 @@ public class StudentData {
         }
         if(flag==true)
         {
-            c=cnic;
+            cnic=c;
         }
         return flag;
         

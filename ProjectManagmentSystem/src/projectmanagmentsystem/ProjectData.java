@@ -85,9 +85,9 @@ public class ProjectData {
         this.disc = disc;
     }
     
-    public String getAdv()
+    public AdvisorData getAdv()
     {
-        return adv.getName();
+        return adv;
     }
     
     public boolean setAdv(String n)

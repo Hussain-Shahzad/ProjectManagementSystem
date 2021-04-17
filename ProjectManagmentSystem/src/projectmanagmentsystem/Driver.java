@@ -29,9 +29,9 @@ public class Driver {
         Addstudent as=new Addstudent();
         
         
-        ap.loadData("PROJECTS.txt");
         ad.loadData("ADVISORS.txt");
         as.loadData("STUDENTS.txt");
+        ap.loadData("PROJECTS.txt");
        
         LOGIN();
         

@@ -1,2 +1,2 @@
-Muattar Mehdi,2020-CS-091,null,muattar@gmail.com,1234,15 jhang road jhang
-Qazi Maaz,2020-CS-064,null,qazi@gmail.com,1234,Kasur
+Muattar Mehdi,2020-CS-091,3310890700213,muattar@gmail.com,1234,15 jhang road jhang,NULL
+Qazi Maaz,2020-CS-064,3340677999003,qazi@gmail.com,1234,Kasur,CS01

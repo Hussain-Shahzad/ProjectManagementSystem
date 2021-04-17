@@ -15,6 +15,7 @@ public class Login extends javax.swing.JFrame {
     private String email="admin@gmail.com";
     private String password="admin123";
     public boolean loginflag=false;
+    private int Index;
     
     /**
      * Creates new form Login
@@ -197,13 +198,15 @@ public class Login extends javax.swing.JFrame {
                  {
                     if (jTextField1.getText().equals(std.getStdList().get(i).getEmail()) && jTextField2.getText().equals(std.getStdList().get(i).getPassword()))
                     {
+                         Index=i;
                          loginflag=true;
+                         break;
                      
                     }
                  }
                     if(loginflag==true)
                     {
-                        StudentM studentmenu=new StudentM();
+                        StudentM studentmenu=new StudentM(Index);
                         setVisible(false);
                         studentmenu.setVisible(true);
                     }else{

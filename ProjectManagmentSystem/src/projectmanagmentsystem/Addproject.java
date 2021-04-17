@@ -76,7 +76,7 @@ public class Addproject extends javax.swing.JFrame {
             {
                 
                 bw.write(PROJECTS.get(i).getTitle() + ","+
-                        PROJECTS.get(i).getAdv() + ","+
+                        PROJECTS.get(i).getAdv().getName() + ","+
                         PROJECTS.get(i).getId()+","+
                         PROJECTS.get(i).getType()+","+
                         PROJECTS.get(i).getDisc()+"\n"
@@ -113,7 +113,6 @@ public class Addproject extends javax.swing.JFrame {
                a.setId(temp[2]);
                a.setType(temp[3]);
                a.setDisc(temp [4]);
-                 
                ADD(a);
                line=br.readLine();
                
@@ -142,8 +141,8 @@ public class Addproject extends javax.swing.JFrame {
         Projects pr=new Projects();
         ProjectData p=pr.getSearched(selected);
         jTextField1.setText(p.getTitle());
-        jTextField2.setText(p.getAdv());
-        jTextField3.setText(p.getTitle());
+        jTextField2.setText(p.getAdv().getName());
+        jTextField3.setText(p.getId());
         jTextArea1.setText(p.getDisc());
         
         
@@ -292,6 +291,10 @@ public class Addproject extends javax.swing.JFrame {
             {
                 ADD(p);
                 System.out.println("Added");
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextArea1.setText("");
             }else{
                 JOptionPane.showMessageDialog(null, "Invalid input");
             }
@@ -305,6 +308,7 @@ public class Addproject extends javax.swing.JFrame {
             {
                 editPrj(prj,index);
                 System.out.println("Edited");
+                setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, "Invalid input");
             }
